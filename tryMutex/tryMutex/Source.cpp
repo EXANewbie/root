@@ -8,35 +8,35 @@
 
 using namespace std;
 
-class SYNCHED_QUEUE
-{
-private :
-	queue<int> que;
-	mutex mtx;
-
-	const int MAX_COUNT = 10;
-public :
-	SYNCHED_QUEUE() {}
-	void enqueue(int element)
-	{
-		//
-	}
-	void dequeue(int myid)
-	{
-		//
-		while (1)
-		{
-			mtx.lock();
-			if (!que.empty())
-			{
-				int object = que.front();
-				que.pop();
-				cout << "consumer "<<myid<<" : " << object << endl;
-			}
-			mtx.unlock();
-		}
-	}	
-};
+//class SYNCHED_QUEUE
+//{
+//private :
+//	queue<int> que;
+//	mutex mtx;
+//
+//	const int MAX_COUNT = 10;
+//public :
+//	SYNCHED_QUEUE() {}
+//	void enqueue(int element)
+//	{
+//		//
+//	}
+//	void dequeue(int myid)
+//	{
+//		//
+//		while (1)
+//		{
+//			mtx.lock();
+//			if (!que.empty())
+//			{
+//				int object = que.front();
+//				que.pop();
+//				cout << "consumer "<<myid<<" : " << object << endl;
+//			}
+//			mtx.unlock();
+//		}
+//	}	
+//};
 
 queue<int> que;
 mutex mtx;
