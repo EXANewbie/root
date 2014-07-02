@@ -31,10 +31,8 @@ int main() {
 	int p, c;
 	cout << "input producer : ";
 	cin >> p;
-	cout << endl;
 	cout << "input consumer : ";
 	cin >> c;
-	cout << endl;
 
 	SYNCHED_QUEUE que;
 
