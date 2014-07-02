@@ -3,7 +3,6 @@
 #include <mutex>
 #include <queue>
 #include <vector>
-
 #include <cstdlib>
 #include <ctime>
 
@@ -14,10 +13,8 @@ class SYNCHED_QUEUE
 private :
 	queue<int> que;
 	mutex mtx;
-
-//	mutex push_enabled;
-
 	const int MAX_COUNT = 10;
+
 public :
 	SYNCHED_QUEUE() {}
 	void enqueue(int element)
@@ -25,36 +22,34 @@ public :
 		mtx.lock();
 		que.push(element);
 		mtx.unlock();
-		//
 	}
 	int dequeue()
 	{
-		//
+		mtx.lock();
+		int obj = que.front();
+		que.pop();
+		mtx.unlock();
+		return obj;
 	}
-	//void push_waited() {
-	//	mtx.lock();
-	//	push_enabled.lock();
-	//	mtx.unlock();
-	//}
-
-	bool is_full() {
-		return que.size() < MAX_COUNT;
+	
+	bool empty()
+	{
+		return que.empty();
 	}
 };
 
-void Producer_run(SYNCHED_QUEUE* queue, int index) {
-	srand(time(NULL));
-
-	while (true) {
-//		queue.push_waited();
-
-		if (queue->is_full() == false) {
-			int element = rand() % 100;
-			queue->enqueue(element);
-			cout << "Producer " << index << " push " << element << endl;
+void ConsumerRun(SYNCHED_QUEUE* que,int id)
+{
+	while (1)
+	{
+		if (!(que->empty()))
+		{
+			int obj=que->dequeue();
+			cout << "consumer " << id << " : " << obj << endl;
 		}
 	}
 }
+
 	
 int main() {
 	int p, c;
@@ -66,26 +61,20 @@ int main() {
 	SYNCHED_QUEUE que;
 
 	vector<thread> vec_producer;
-	//thread **list = new thread *[p];
+	vector<thread> vec_consumer;
 
-	for (int i = 0; i < p; i++) {
-		vec_producer.push_back(thread(Producer_run, &que, i));
-		//list[i] = new thread(Producer_run, que, i+1);
+	
+	for (int i = 0; i < c; ++i)
+	{
+		vec_consumer.push_back(thread(ConsumerRun, &que, i));
 	}
-
-	// consumer
-
 
 	for (int i = 0; i < p; i++) {
 		vec_producer[i].join();
-		//list[i]->join();
+		vec_consumer[i].join();
 	}
 
 	vec_producer.clear();
 
-/*	for (int i = 0; i < p; i++) {
-			delete(list[i]);
-	}*/
-//	delete(que);
-//	delete(list);
+
 }
