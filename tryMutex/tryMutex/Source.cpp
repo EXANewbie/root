@@ -46,8 +46,6 @@ void Producer_run(SYNCHED_QUEUE* queue, int index) {
 	srand(time(NULL));
 
 	while (true) {
-//		queue.push_waited();
-
 		if (queue->is_full() == false) {
 			int element = rand() % 100;
 			queue->enqueue(element);
@@ -66,11 +64,9 @@ int main() {
 	SYNCHED_QUEUE que;
 
 	vector<thread> vec_producer;
-	//thread **list = new thread *[p];
 
 	for (int i = 0; i < p; i++) {
 		vec_producer.push_back(thread(Producer_run, &que, i));
-		//list[i] = new thread(Producer_run, que, i+1);
 	}
 
 	// consumer
@@ -78,14 +74,7 @@ int main() {
 
 	for (int i = 0; i < p; i++) {
 		vec_producer[i].join();
-		//list[i]->join();
 	}
 
 	vec_producer.clear();
-
-/*	for (int i = 0; i < p; i++) {
-			delete(list[i]);
-	}*/
-//	delete(que);
-//	delete(list);
 }
