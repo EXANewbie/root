@@ -47,6 +47,8 @@ int main() {
 	for (int i = 0; i<1000; i++) {
 		p1_mutex.lock();
 		p2_mutex.lock();
+		p2_mutex.lock();
+		p2_mutex.lock();
 		if (p1.empty() == 0 && p2.empty() == 0){
 			cout << ++cnt << ": ";
 			int a, b;
