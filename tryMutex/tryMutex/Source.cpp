@@ -2,9 +2,9 @@
 #include <thread>
 #include <mutex>
 #include <queue>
-
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 
 using namespace std;
 
@@ -21,22 +21,63 @@ public :
 	{
 		//
 	}
-	int dequeue()
+	void dequeue(int myid)
 	{
 		//
+		while (1)
+		{
+			mtx.lock();
+			if (!que.empty())
+			{
+				int object = que.front();
+				que.pop();
+				cout << "consumer "<<myid<<" : " << object << endl;
+			}
+			mtx.unlock();
+		}
 	}	
 };
+
+queue<int> que;
+mutex mtx;
+
+void dequeue(int myid)
+{
+	//
+	while (1)
+	{
+		mtx.lock();
+		if (!que.empty())
+		{
+			int object = que.front();
+			que.pop();
+			cout << "consumer " << myid << " : " << object << endl;
+		}
+		mtx.unlock();
+	}
+}
+
 
 int main() {
 	int p, c;
 	cout << "input producer : ";
 	cin >> p;
-	cout << endl;
+	
 	cout << "input consumer : ";
 	cin >> c;
-	cout << endl;
-
-	SYNCHED_QUEUE que;
+	
+	//SYNCHED_QUEUE que;
+	
+	vector<thread> vt;
+	
+	for (int i = 0; i < c; ++i)
+	{
+		vt.push_back(thread(dequeue, i));
+	}
+	for (int i = 0; i < c; ++i)
+	{
+		vt[i].join();
+	}
 
 	
 }
