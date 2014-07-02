@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <thread>
 #include <mutex>
 #include <stack>
@@ -58,7 +58,7 @@ int main() {
 			b = p2.top();
 			p2.pop();
 			cout << "getP2 ";
-			cout << "A±¸ÀÔ:" << a << " " << "B±¸ÀÔ:" << b << " °è : " << a + b << endl;
+			cout << "Aêµ¬ìž…:" << a << " " << "Bêµ¬ìž…:" << b << " Total : " << a + b << endl;
 		}
 		p1_mutex.unlock();
 		p2_mutex.unlock();
