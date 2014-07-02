@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// TEST CODE
+
 stack<int> p1, p2;
 mutex p1_mutex, p2_mutex;
 int cnt;
